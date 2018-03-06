@@ -3,13 +3,16 @@
         <div class="head-top">
             <div class="section">
                 <div class="left-box">
-                    <span>知识分享系统</span>
+                    <!-- <span>知识分享系统</span> -->
+                    欢迎您&nbsp;&nbsp;
+                    <span style="font-size:18px;color:#f60">{{userName}}</span>
                     <a target="_blank" href="#"></a>
                     <a target="_blank" href="#"></a>
                 </div>
                 <div id="menu" class="right-box">
-                    <a href="/login.html">登录</a>
-                    <a href="/register.html">注册</a>
+                    <router-link v-if="!userName" :to="{name:'login'}">登录</router-link>
+                    <el-button type="warning" size="mini" v-if="userName" @click="logout">退出登录</el-button>
+                    <el-button type="primary" size="mini" v-if="userName" @click="logout">注册</el-button>
                     <strong>|</strong>
                 </div>
             </div>
@@ -69,6 +72,11 @@
 import "@/lib/nav/css/style.css";
 import $ from "jquery";
 export default {
+  data() {
+    return {
+      userName: localStorage.getItem("user")
+    };
+  },
   mounted() {
     $(document).ready(function() {
       $("#menu2 li a").wrapInner('<span class="out"></span>');
@@ -95,6 +103,24 @@ export default {
         }
       );
     });
+  },
+  methods: {
+    logout() {
+      this.$confirm("您确定要退出登录", "退出提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$http.get(this.$api.logout).then(res => {
+            if (res.data.status == 0) {
+              localStorage.removeItem("user");
+              this.$router.push({ name: "login" });
+            }
+          });
+        })
+        .catch(() => {});
+    }
   }
 };
 </script>

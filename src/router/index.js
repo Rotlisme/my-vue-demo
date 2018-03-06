@@ -24,7 +24,7 @@ let order = [
 let shopcart = [
   { name: 'shopcart', path: 'shopcart', component: Shopcart }
 ]
-export default new Router({
+let router = new Router({
   routes: [
     { name: 'login', path: '/login', component: Login },
     {
@@ -33,3 +33,33 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  Vue.prototype.$http.get(Vue.prototype.$api.isLogin).then(res => {
+    let isLogin = false;
+
+    // 已登陆
+    if (res.data.code == 'logined') {
+      isLogin = true;
+    }
+    if (to.name == 'login') {
+      if (isLogin) {
+        next({ name: 'list' });
+      }
+      else {
+        next();
+      }
+    }
+    if (to.name != 'login') {
+      if (isLogin) {
+        next();
+      }
+      else {
+        next({ name: 'login', query: { next: to.fullPath } });
+      }
+    }
+
+  })
+}
+)
+export default router;

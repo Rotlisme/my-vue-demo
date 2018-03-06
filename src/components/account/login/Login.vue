@@ -73,7 +73,6 @@ export default {
       // 2 如果为0, 说明登陆成功, 本地localStorage存储后端返回的用户信息
       // 3 跳转到后台管理首页
       this.$http.post("/site/account/login", this.user).then(rsp => {
-        console.log(rsp.data);
         let { status, message } = rsp.data; // 解构赋值的方式提取两个属性
         if (status == 0) {
           this.$notify({
@@ -82,7 +81,7 @@ export default {
             type: "success",
             duration: 800
           });
-          localStorage.setItem("user", message.user_name); // 需要转换为字符串存储
+          localStorage.setItem("user", this.user.user_name); // 需要转换为字符串存储
           // this.$router.push({ path: this.$route.query.next }); //这里也可以使用路由规则名称{name:'/admin'}
           let nextPage = this.$route.query.next || "/goods/list";
           this.$router.push({ path: nextPage });

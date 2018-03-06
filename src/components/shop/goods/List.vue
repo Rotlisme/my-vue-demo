@@ -83,7 +83,6 @@ export default {
     getTop() {
       this.$http.get(this.$api.goodsTop).then(res => {
         if (res.data.status == 0) {
-          console.log(res.data.message);
           this.top = res.data.message;
         }
       });
