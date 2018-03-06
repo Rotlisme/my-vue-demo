@@ -9,10 +9,13 @@ import 'normalize.css';
 Vue.use(ElementUI);
 // 1.3 导入全局样式
 import './less/index.less';
+import './assets/css/style.css'
 import axios from 'axios';
-axios.defaults.baseURL = 'http://127.0.0.1:8899';
+import api, { domain } from './js/api.js'
+axios.defaults.baseURL = domain;
 axios.defaults.withCredentials = true;
 Vue.prototype.$http = axios;
+Vue.prototype.$api = api;
 Vue.config.productionTip = false;
 
 new Vue({

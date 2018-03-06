@@ -8,14 +8,18 @@
         <router-view></router-view>
       </el-col>
     </el-row>
+    <!-- 公共尾部 -->
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
 import appHeader from "./subCom/Header.vue";
+import appFooter from "./subCom/Footer.vue";
 export default {
   components: {
-    appHeader
+    appHeader,
+    appFooter
   }
 };
 </script>
