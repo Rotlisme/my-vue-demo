@@ -9,7 +9,7 @@ import 'normalize.css';
 Vue.use(ElementUI);
 // 1.3 导入全局样式
 import './less/index.less';
-import './assets/css/style.css'
+import './assets/css/style.css';
 import axios from 'axios';
 import api, { domain } from './js/api.js'
 axios.defaults.baseURL = domain;

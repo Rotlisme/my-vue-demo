@@ -22,9 +22,7 @@
                 <div id="menu2" class="nav-box menuhd">
                     <ul>
                         <li class="index">
-                            <a href="/index.html">
-                                首页
-                            </a>
+                            <router-link :to="{name:'list'}">首页</router-link>
                         </li>
                         <li class="news">
                             <a href="/news.html">
@@ -68,7 +66,37 @@
 </template>
 
 <script>
-export default {};
+import "@/lib/nav/css/style.css";
+import $ from "jquery";
+export default {
+  mounted() {
+    $(document).ready(function() {
+      $("#menu2 li a").wrapInner('<span class="out"></span>');
+      $("#menu2 li a").each(function() {
+        $('<span class="over">' + $(this).text() + "</span>").appendTo(this);
+      });
+
+      $("#menu2 li a").hover(
+        function() {
+          $(".out", this)
+            .stop()
+            .animate({ top: "48px" }, 300); // move down - hide
+          $(".over", this)
+            .stop()
+            .animate({ top: "0px" }, 300); // move down - show
+        },
+        function() {
+          $(".out", this)
+            .stop()
+            .animate({ top: "0px" }, 300); // move up - show
+          $(".over", this)
+            .stop()
+            .animate({ top: "-48px" }, 300); // move up - hide
+        }
+      );
+    });
+  }
+};
 </script>
 
 <style scoped>

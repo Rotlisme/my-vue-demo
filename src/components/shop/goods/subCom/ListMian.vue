@@ -5,7 +5,7 @@
             <div class="main-tit">
                 <h2>{{item.catetitle}}</h2>
                 <p>
-                    <router-link v-for="subItem in item.level2catelist" :key="subItem.subcateid">{{ subItem.subcatetitle }}</router-link>
+                    <router-link to="/" v-for="subItem in item.level2catelist" :key="subItem.subcateid">{{ subItem.subcatetitle }}</router-link>
                     <a href="/goods/40.html">更多
                         <i>+</i>
                     </a>
@@ -18,7 +18,7 @@
                     <ul class="img-list">
                         <li v-for="subitem in item.datas" :key="subitem.artID">
                             <!-- 点击商品进去详情页, 详情页需要拿到商品id -->
-                            <router-link :to="{name: 'goodsDetail', params: {id: subitem.artID}}">
+                            <router-link :to="{name: 'detail', params: {id: subitem.artID}}">
                                 <div class="img-box">
                                     <img :src="subitem.img_url"> </div>
                                 <div class="info">
@@ -53,7 +53,6 @@ export default {
       this.$http.get(this.$api.goodsContent).then(res => {
         if (res.data.status == 0) {
           this.goodsGroup = res.data.message;
-          console.log(this.goodsGroup);
         }
       });
     }
