@@ -16,7 +16,7 @@ let goods = [
 ]
 
 let order = [
-  { name: 'site', path: 'order/site/:id', component: Site },
+  { name: 'site', path: 'order/site/:ids', component: Site },
   { name: 'pay', path: 'order/pay/:id', component: Pay },
   { name: 'complete', path: 'order/complete', component: Complete },
 ]
@@ -34,7 +34,13 @@ let router = new Router({
   ]
 })
 
+let baidan = ['list', 'detail', 'shopcart'];
 router.beforeEach((to, from, next) => {
+  let isTrue = baidan.some(v => v == to.name);
+  if (isTrue) {
+    next();
+    return;
+  }
   Vue.prototype.$http.get(Vue.prototype.$api.isLogin).then(res => {
     let isLogin = false;
 

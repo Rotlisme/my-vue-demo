@@ -3,7 +3,8 @@ export default {
 
     // 定义状态, 相当于data数据
     state: {
-        cart: JSON.parse(localStorage.getItem('cart')) || {}  // 数据结构预览: { 153: 5, 154: 10, 155: 12 }, ID为key, 数量为value
+        cart: JSON.parse(localStorage.getItem('cart')) || {}, // 数据结构预览: { 153: 5, 154: 10, 155: 12 }, ID为key, 数量为value
+        totalPrice: 0
     },
     // 定义修改状态的方法, 这里的方法需要通过store.commit(方法名称, 参数)
     mutations: {
@@ -18,6 +19,9 @@ export default {
         del(state, id) {
             Vue.delete(state.cart, id);
             localStorage.setItem('cart', JSON.stringify(state.cart));
+        },
+        totalPrice(state, sum) {
+            state.totalPrice = sum;
         }
     },
     getters: {

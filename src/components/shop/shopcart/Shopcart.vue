@@ -94,8 +94,8 @@
                     <!--购物车底部-->
                     <div class="cart-foot clearfix">
                         <div class="right-box">
-                            <button class="button">继续购物</button>
-                            <button class="submit">立即结算</button>
+                            <button class="button" @click="$router.go(-1)">继续购物</button>
+                            <button class="submit" @click="pay">立即结算</button>
                         </div>
                     </div>
 
@@ -130,6 +130,7 @@ export default {
       this.goodsList.forEach(
         v => v.selected && (sum += this.$store.state.cart[v.id] * v.sell_price)
       );
+      this.$store.commit("totalPrice", sum);
       return sum;
       // let arr = [1, 2, 3, 4, 5, 6, 7, 8]
       // arr.reduce((sum, v) => sum + v, 0)
@@ -155,6 +156,10 @@ export default {
     del(id) {
       this.goodsList = this.goodsList.filter(v => v.id != id); // 找出不删除的商品
       this.$store.commit("del", id); // 调用mutaions方法删除
+    },
+    pay() {
+      let ids = this.goodsList.filter(v => v.selected).map(v => v.id);
+      this.$router.push({ name: "site", params: { ids: ids.join(",") } });
     }
   },
   created() {
