@@ -76,7 +76,7 @@
                                         <dt>购买数量</dt>
                                         <dd>
                                             <div class="stock-box">
-                                                <el-input-number size="mini" v-model="num" :min="1"></el-input-number>
+                                                <el-input-number size="mini" v-model="num" :min="0" :max="top.goodsinfo.stock_quantity"></el-input-number>
                                             </div>
                                             <span class="stock-txt">
                                                 库存
@@ -88,7 +88,7 @@
                                         <dd>
                                             <div class="btn-buy" id="buyButton">
                                                 <button class="buy">立即购买</button>
-                                                <button class="add">加入购物车</button>
+                                                <button class="add" @click="addCart">加入购物车</button>
                                             </div>
                                         </dd>
                                     </dl>
@@ -143,7 +143,7 @@ export default {
         hotgoodslist: []
       },
       id: this.$route.params.id,
-      num: 1
+      num: 0
     };
   },
   methods: {
@@ -154,7 +154,12 @@ export default {
           this.top = res.data.message;
         }
       });
-    }
+    },
+     // 加入购物车
+            addCart() {
+                this.$store.commit('modify', { id: this.id, num: this.num });
+                this.num = 0;  // 加完之后重置计数框
+              }
   },
   created() {
     this.getTop();

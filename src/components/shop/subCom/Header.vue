@@ -11,9 +11,11 @@
                 </div>
                 <div id="menu" class="right-box">
                     <router-link v-if="!userName" :to="{name:'login'}">登录</router-link>
-                    <el-button type="warning" size="mini" v-if="userName" @click="logout">退出登录</el-button>
-                    <el-button type="primary" size="mini" v-if="userName" @click="logout">注册</el-button>
+                    <a type="primary" size="mini" v-if="userName" @click="logout">注册</a>
                     <strong>|</strong>
+                    <router-link :to="{name:'shopcart'}">购物车(0)</router-link>
+                    <strong>|</strong>
+                    <el-button type="warning" size="mini" v-if="userName" @click="logout">退出登录</el-button>
                 </div>
             </div>
         </div>

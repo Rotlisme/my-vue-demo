@@ -5,8 +5,11 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
+import Vuex from 'vuex'
+import storeCart from './store/cart.js'
 
 Vue.use(ElementUI);
+Vue.use(Vuex);
 // 1.3 导入全局样式
 import './less/index.less';
 import './assets/css/style.css';
@@ -22,5 +25,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  store: new Vuex.Store(storeCart)
 })
